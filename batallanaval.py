@@ -15,6 +15,7 @@ def imprimirMapa(tablero,n):
     i=0
     while (i<n):
         fila = tablero[i]
+
         print ("\t|"+"     |"*n)
         j=0
         cadena=str(i+1)+"\t|"
@@ -47,10 +48,9 @@ def ponerBarcos(tamano, barcos, tablero):
             imprimirMapa(tablero,tamano)
             ingreso=ingresar()
             tablero=ponerBarco(tablero, tamano, largoBarco, ingreso)
-            print("dokidoki")
             largo -= 1
         largoBarco+=1
-    return 0  
+    return tablero  
 
 def chequeoV(tablero, tamano, largoBarco, ingreso):
     posiciones = []
