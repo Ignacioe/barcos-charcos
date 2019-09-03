@@ -73,10 +73,8 @@ def chequeoH(tablero, tamano, largoBarco, ingreso):
     return bandera
 
 def ponerBarco(tablero, tamano, largoBarco, ingreso):
-    bandera=True
     posibles=["w","a","s","d","e","c"]
     tableroTemporal = []
-    #while(bandera):
     for columna in tablero:
         columnaTemporal=columna[:]
         tableroTemporal+=[columnaTemporal]
@@ -99,7 +97,6 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                     return ponerBarco(tablero, tamano, largoBarco, ingreso)
                 else:
                     retorno = (ingreso[0],ingreso[1],ingreso[2]+1)
-                    print(retorno[2])
                     return ponerBarco(tablero, tamano, largoBarco, retorno)
             elif(accion == "a"):
                 if(ingreso[2] == 0):
@@ -126,7 +123,6 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                         if(tableroTemporal[i][ingreso[2]] == "#"):
                             tableroTemporal[i][ingreso[2]] = "X"
                         i+=1
-                    bandera= False
                 else:
                     return ponerBarco(tablero, tamano, largoBarco, ingreso)
         else:
