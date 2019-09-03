@@ -82,10 +82,10 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
         tableroTemporal+=[columnaTemporal]
     if(ingreso[0]):
         i = ingreso[1]
-        while (i<largoBarco+ingreso[1]):
-            tableroTemporal[i][ingreso[2]] = "#"
-            i+=1
         if(largoBarco<=tamano-ingreso[1]):
+            while (i<largoBarco+ingreso[1]):
+                tableroTemporal[i][ingreso[2]] = "#"
+                i+=1
             imprimirMapa(tableroTemporal, tamano)
             print("X = Barcos \t\t # = Barco Actual \t _ = Agua")
             accion = ""
@@ -130,14 +130,14 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                 else:
                     return ponerBarco(tablero, tamano, largoBarco, ingreso)
         else:
-            retorno = (ingreso[0],ingreso[1],ingreso[2]-1)
+            retorno = (ingreso[0],ingreso[1]-1,ingreso[2])
             return ponerBarco(tablero, tamano, largoBarco, retorno)
     else:
         i = ingreso[2]
-        while (i<largoBarco+ingreso[2]):
-            tableroTemporal[ingreso[1]][i] = "#"
-            i+=1
         if(largoBarco<=tamano-ingreso[2]):
+            while (i<largoBarco+ingreso[2]):
+                tableroTemporal[ingreso[1]][i] = "#"
+                i+=1
             imprimirMapa(tableroTemporal, tamano)
             print("X = Barcos \t\t # = Barco Actual \t _ = Agua")
             accion = ""
@@ -181,7 +181,7 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                 else:
                     return ponerBarco(tablero, tamano, largoBarco, ingreso)
         else:
-            retorno = (ingreso[0],ingreso[1]-1,ingreso[2])
+            retorno = (ingreso[0],ingreso[1],ingreso[2]-1)
             return ponerBarco(tablero, tamano, largoBarco, retorno)
     return tableroTemporal
 
