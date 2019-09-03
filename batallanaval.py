@@ -62,6 +62,16 @@ def chequeoV(tablero, tamano, largoBarco, ingreso):
         i += 1
     return bandera
 
+def chequeoH(tablero, tamano, largoBarco, ingreso):
+    posiciones = []
+    i = ingreso[2]
+    bandera = True
+    while(i<largoBarco+ingreso[2] and bandera):
+        if(tablero[ingreso[1]][i] == "X"):
+            bandera = False
+        i += 1
+    return bandera
+
 def ponerBarco(tablero, tamano, largoBarco, ingreso):
     bandera=True
     posibles=["w","a","s","d","e","c"]
@@ -110,7 +120,6 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                     retorno = (ingreso[0],ingreso[1]-1,ingreso[2])
                     return ponerBarco(tablero, tamano, largoBarco, retorno)
             elif(accion == "c"):
-                print(chequeoV(tablero, tamano, largoBarco, ingreso))
                 if(chequeoV(tablero, tamano, largoBarco, ingreso)):
                     i = ingreso[1]
                     while (i<largoBarco+ingreso[1]):
@@ -122,6 +131,57 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
                     return ponerBarco(tablero, tamano, largoBarco, ingreso)
         else:
             retorno = (ingreso[0],ingreso[1],ingreso[2]-1)
+            return ponerBarco(tablero, tamano, largoBarco, retorno)
+    else:
+        i = ingreso[2]
+        while (i<largoBarco+ingreso[2]):
+            tableroTemporal[ingreso[1]][i] = "#"
+            i+=1
+        if(largoBarco<=tamano-ingreso[2]):
+            imprimirMapa(tableroTemporal, tamano)
+            print("X = Barcos \t\t # = Barco Actual \t _ = Agua")
+            accion = ""
+            while (not (accion in posibles)):
+                accion = input("WASD = Mover Barco \t C = Colocar Barco \t E = Cancelar Direccion/Posicion\n").lower()
+            if(accion=="e"):
+                ingreso = ingresar()
+                return ponerBarco(tablero, tamano, largoBarco, ingreso)
+            elif(accion == "d"):
+                if(ingreso[2] + largoBarco == tamano):
+                    return ponerBarco(tablero, tamano, largoBarco, ingreso)
+                else:
+                    retorno = (ingreso[0],ingreso[1],ingreso[2]+1)
+                    return ponerBarco(tablero, tamano, largoBarco, retorno)
+            elif(accion == "a"):
+                if(ingreso[2] == 0):
+                    return ponerBarco(tablero, tamano, largoBarco, ingreso)
+                else:
+                    retorno = (ingreso[0],ingreso[1],ingreso[2]-1)
+                    return ponerBarco(tablero, tamano, largoBarco, retorno)
+            elif(accion == "s"):
+                if(ingreso[1] == tamano - 1):
+                    return ponerBarco(tablero, tamano, largoBarco, ingreso)
+                else:
+                    retorno = (ingreso[0],ingreso[1]+1,ingreso[2])
+                    return ponerBarco(tablero, tamano, largoBarco, retorno)
+            elif(accion == "w"):
+                if(ingreso[1] == 0):
+                    return ponerBarco(tablero, tamano, largoBarco, ingreso)
+                else:
+                    retorno = (ingreso[0],ingreso[1]-1,ingreso[2])
+                    return ponerBarco(tablero, tamano, largoBarco, retorno)
+            elif(accion == "c"):
+                if(chequeoH(tablero, tamano, largoBarco, ingreso)):
+                    i = ingreso[2]
+                    while (i<largoBarco+ingreso[2]):
+                        if(tableroTemporal[ingreso[1]][i] == "#"):
+                            tableroTemporal[ingreso[1]][i] = "X"
+                        i+=1
+                    bandera= False
+                else:
+                    return ponerBarco(tablero, tamano, largoBarco, ingreso)
+        else:
+            retorno = (ingreso[0],ingreso[1]-1,ingreso[2])
             return ponerBarco(tablero, tamano, largoBarco, retorno)
     return tableroTemporal
 
