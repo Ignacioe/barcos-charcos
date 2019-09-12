@@ -29,12 +29,24 @@ def imprimirMapa(tablero,n):
 def juego(tablero1, tablero2, turno, tamano):
     return 0
 
-def ingresar():
+def ingresar(tamano):
     direccion = ""
+    band1=False
+    band2=False
     while (direccion != "v" and direccion != "h"):
         direccion=(input("Ingrese 'v' para colocar el barco vertical, o 'h' para colocarlo horizontal: ")).lower()
-    posx=int(input("Ingrese la fila: ")) - 1
-    posy=int(input("Ingrese la columna: ")) - 1
+    while (band1==False):
+        posx=input("Ingrese la fila: ")
+        if(posx.isnumeric()):
+            posx=int(posx)-1
+            if(posx<=tamano):
+                band1=True
+    while (band2==False):
+        posy=input("Ingrese la columna: ")
+        if(posy.isnumeric()):
+            posy=int(posy)-1
+            if(posy<=tamano):
+                band2=True
     if(direccion=="v"):
         direccion=True
     else:
@@ -46,7 +58,7 @@ def ponerBarcos(tamano, barcos, tablero):
     for largo in barcos:
         while largo > 0:
             imprimirMapa(tablero,tamano)
-            ingreso=ingresar()
+            ingreso=ingresar(tamano)
             tablero=ponerBarco(tablero, tamano, largoBarco, ingreso)
             largo -= 1
         largoBarco+=1
@@ -90,7 +102,7 @@ def ponerBarco(tablero, tamano, largoBarco, ingreso):
             while (not (accion in posibles)):
                 accion = input("WASD = Mover Barco \t C = Colocar Barco \t E = Cancelar Direccion/Posicion\n").lower()
             if(accion=="e"):
-                ingreso = ingresar()
+                ingreso = ingresar(tamano)
                 return ponerBarco(tablero, tamano, largoBarco, ingreso)
             elif(accion == "d"):
                 if(ingreso[2] == tamano - 1):
@@ -196,7 +208,8 @@ if __name__ == "__main__":
     turno = False
     tableroplayer1 = ponerBarcos(tamano, barcos, tableroPlayer1)
     imprimirMapa(tableroplayer1,tamano)
-    #tableroplayer2 = ponerBarcos(tamano, barcos, tableroPlayer2)
+    tableroplayer2 = ponerBarcos(tamano, barcos, tableroPlayer2)
+    imprimirMapa(tableroplayer2,tamano)
     #juego(tableroplayer1, tableroplayer2, turno, tamano)
         
     
